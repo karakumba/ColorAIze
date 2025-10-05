@@ -1,0 +1,17 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Копирование скрипта загрузки
+COPY scripts/download_model.py .
+
+# Создание директории для моделей
+RUN mkdir -p models
+
+# Загрузка модели
+CMD ["python", "download_model.py"]

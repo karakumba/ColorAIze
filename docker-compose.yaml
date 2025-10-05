@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/storage:/app/storage
+      - ./ml/models:/app/models
+    environment:
+      - ENVIRONMENT=production
+      - MODEL_PATH=/app/models/ColorizeArtistic_gen.pth
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    restart: unless-stopped
+
+  ml-downloader:
+    build:
+      context: ./ml
+      dockerfile: Dockerfile.download
+    volumes:
+      - ./ml/models:/app/models
+    environment:
+      - MODEL_URL=https://github.com/jantic/DeOldify/releases/download/v1.0/ColorizeArtistic_gen.pth
+    profiles:
+      - download
+
+volumes:
+  model-storage:
+  image-storage:

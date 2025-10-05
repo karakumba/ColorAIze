@@ -1,45 +1,25 @@
 [tool.poetry]
-name = "colorization-backend"
+name = "colorization-ml"
 version = "0.1.0"
-description = "Backend for image colorization using AI"
+description = "ML models for image colorization"
 authors = ["Your Team <team@example.com>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.104.1"
-uvicorn = "^0.24.0"
-celery = "^5.3.4"
-redis = "^5.0.1"
-pillow = "^10.1.0"
-python-multipart = "^0.0.6"
-pydantic = "^2.5.0"
-python-dotenv = "^1.0.0"
-aiofiles = "^23.2.1"
-loguru = "^0.7.2"
-
-# ML зависимости
 torch = "^2.1.0"
 torchvision = "^0.16.0"
 opencv-python = "^4.8.1"
+pillow = "^10.1.0"
 numpy = "^1.24.0"
-requests = "^2.31.0"
-
-# DeOldify (установка из GitHub)
-deoldify = { git = "https://github.com/jantic/DeOldify.git", rev = "master" }
+matplotlib = "^3.7.0"
+jupyter = "^1.0.0"
+scikit-image = "^0.21.0"
+fastai = "^1.0.61"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.0"
-pytest-asyncio = "^0.21.0"
 black = "^23.0.0"
 isort = "^5.12.0"
-flake8 = "^6.0.0"
-mypy = "^1.5.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-start-api = "app.main:main"
-start-worker = "workers.celery_worker:main"

@@ -1,1 +1,16 @@
-.idea
+    # PyCharm-specific files
+    .idea/
+
+    # Virtual environment
+    venv/
+    .venv/
+
+    # Python bytecode
+    *.pyc
+    __pycache__/
+
+    # Log files
+    *.log
+
+    # Sensitive data (example)
+    config.ini

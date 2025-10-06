@@ -23,7 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/processed", StaticFiles(directory="storage/processed"), name="processed")
+app.mount("/processed", StaticFiles(directory="storage/processed", check_dir=False), name="processed")
 
 
 @app.on_event("startup")

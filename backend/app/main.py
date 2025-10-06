@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 from loguru import logger
 import shutil
-from colorizer import ImageColorizer
+from .colorizer import ImageColorizer
 
 app = FastAPI(
     title="ColorAIze API",

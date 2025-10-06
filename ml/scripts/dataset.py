@@ -120,8 +120,13 @@ class ColorizationDataset(Dataset):
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, str]:
         rec = self.records[idx]
 
-        gray_img = Image.open(rec.gray_path).convert("L")  # одно канал
+        # Загружаем целевое цветное изображение
         color_img = Image.open(rec.color_path).convert("RGB")
+        # Если путь к серому отсутствует или файла нет — генерируем L из color (экономия диска)
+        if rec.gray_path and Path(rec.gray_path).exists():
+            gray_img = Image.open(rec.gray_path).convert("L")
+        else:
+            gray_img = color_img.convert("L")
 
         # Выбираем набор трансформаций
         transform = self.transform_train if self.split == "train" else self.transform_eval

@@ -9,14 +9,28 @@ import io
 class ImageColorizer:
     def __init__(self):
         self.model = None
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        logger.info(f"Using device: {self.device}")
+        # DEVICE override via env (cpu/cuda), fallback to auto-detect
+        device_env = os.getenv("DEVICE")
+        if device_env in {"cpu", "cuda"}:
+            self.device = torch.device(device_env)
+        else:
+            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+        # Render factor from env, default 35
+        try:
+            self.render_factor = int(os.getenv("RENDER_FACTOR", "35"))
+        except ValueError:
+            self.render_factor = 35
+
+        logger.info(f"Using device: {self.device}, render_factor={self.render_factor}")
         self.load_model()
 
     def load_model(self):
         try:
+            # DeOldify searches weights in local ./models by default (fastai convention)
+            # Our Dockerfile ensures models/ColorizeArtistic_gen.pth is present.
             from deoldify.visualize import get_image_colorizer
-            logger.info("Loading DeOldify model...")
+            logger.info("Loading DeOldify model (artistic)...")
             self.model = get_image_colorizer(artistic=True)
             logger.info("✅ DeOldify model loaded successfully")
         except ImportError as e:
@@ -42,7 +56,7 @@ class ImageColorizer:
             with open(temp_input_path, "wb") as f:
                 f.write(image_bytes)
 
-            result_image = self.model.get_transformed_image(path=temp_input_path, render_factor=35)
+            result_image = self.model.get_transformed_image(path=temp_input_path, render_factor=self.render_factor)
             result_image.save(output_path, quality=95)
 
             os.remove(temp_input_path)

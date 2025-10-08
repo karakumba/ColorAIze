@@ -40,26 +40,6 @@ ColorAIze/
 │   └── pyproject.toml         # Зависимости Poetry для ML части
 └── README.md                  # Документация проекта
 ```
-## Quick Start
-
-### Backend
-```bash
-cd backend
-poetry install
-poetry run uvicorn app.main:app --reload
-```
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-### ML
-```bash
-cd ml
-poetry install
-poetry run python scripts/download_model.py
-```
 
 ## 🚀 Инструкции по запуску
 

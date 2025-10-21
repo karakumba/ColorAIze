@@ -99,6 +99,7 @@ body{
   transition: border-color .2s, background .2s;
   cursor:pointer;
   color: #868686;
+  border-radius: 12px;
 }
 .dropzone.drop-hover{ border-color: color-mix(in srgb, var(--a1) 60%, #fff 0%); background: rgba(255,255,255,.06) }
 

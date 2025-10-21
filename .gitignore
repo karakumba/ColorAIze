@@ -1,16 +1,22 @@
-    # PyCharm-specific files
-    .idea/
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
 
-    # Virtual environment
-    venv/
-    .venv/
+# Python / backend & ml
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+backend/.pytest_cache/
+ml/.pytest_cache/
 
-    # Python bytecode
-    *.pyc
-    __pycache__/
+# ML data & models (если надо исключить локальные веса/дату)
+ml/data/
+ml/models/
+ml/notebooks/.ipynb_checkpoints/
 
-    # Log files
-    *.log
-
-    # Sensitive data (example)
-    config.ini
+# OS/IDE
+.DS_Store
+.vscode/
+.idea/
